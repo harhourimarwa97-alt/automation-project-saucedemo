@@ -1,0 +1,28 @@
+{
+  "nominal": {
+    "username": "standard_user",
+    "password": "secret_sauce"
+  },
+  "erreur_connexion": [
+    {
+      "cas": "utilisateur_invalide",
+      "username": "invalid_user",
+      "password": "invalid_password",
+      "message_erreur": "Epic sadface: Username and password do not match any user in this service"
+    },
+    {
+      "cas": "sans_username",
+      "username": "",
+      "password": "secret_sauce",
+      "message_erreur": "Epic sadface: Username is required"
+    },
+    {
+      "cas": "sans_password",
+      "username": "standard_user",
+      "password": "",
+      "message_erreur": "Epic sadface: Password is required"
+    }
+  ],
+  
+  "💡 Note": "Les tests supplémentaires (utilisateur bloqué, performance) utilisent des données codées directement dans le code"
+}

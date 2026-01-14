@@ -1,0 +1,48 @@
+
+========================================
+TEST DE PERFORMANCE - 2026-01-13 21:25:18
+========================================
+Temps de chargement: 1.13 secondes
+Temps de connexion: 0.39 secondes
+Score: 6/6
+Résultat: PASS
+
+========================================
+TEST DE PERFORMANCE - 2026-01-13 21:39:19
+========================================
+Temps de chargement: 1.08 secondes
+Temps de connexion: 0.35 secondes
+Score: 6/6
+Résultat: PASS
+
+========================================
+TEST DE PERFORMANCE - 2026-01-13 21:44:41
+========================================
+Temps de chargement: 1.43 secondes
+Temps de connexion: 0.35 secondes
+Score: 6/6
+Résultat: PASS
+
+========================================
+TEST DE PERFORMANCE - 2026-01-13 21:56:06
+========================================
+Temps de chargement: 1.40 secondes
+Temps de connexion: 0.35 secondes
+Score: 6/6
+Résultat: PASS
+
+========================================
+TEST DE PERFORMANCE - 2026-01-13 22:01:20
+========================================
+Temps de chargement: 0.93 secondes
+Temps de connexion: 0.37 secondes
+Score: 6/6
+Résultat: PASS
+
+========================================
+TEST DE PERFORMANCE - 2026-01-14 08:50:05
+========================================
+Temps de chargement: 0.70 secondes
+Temps de connexion: 0.18 secondes
+Score: 6/6
+Résultat: PASS
