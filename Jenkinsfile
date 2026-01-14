@@ -13,17 +13,24 @@ pipeline {
                 script {
                     echo '🐍 Configuration de Python...'
                     
-                    // Vérifier si Python est déjà installé
+                    // Vérifier si python ou py est disponible
                     def pythonCheck = bat(returnStatus: true, script: 'python --version 2>nul')
+                    def pyCheck = bat(returnStatus: true, script: 'py --version 2>nul')
                     
-                    if (pythonCheck != 0) {
+                    if (pythonCheck == 0) {
+                        echo '✅ Python (commande python) est disponible'
+                        env.PYTHON_CMD = 'python'
+                    } else if (pyCheck == 0) {
+                        echo '✅ Python (commande py) est disponible'
+                        env.PYTHON_CMD = 'py'
+                    } else {
                         echo 'Python non trouvé. Installation manuelle requise.'
                         echo 'Veuillez installer Python 3.14.2 depuis https://www.python.org/downloads/'
                         error('Python non installé sur cet agent')
-                    } else {
-                        echo '✅ Python est déjà installé'
-                        bat 'python --version'
                     }
+                    
+                    // Afficher la version de Python
+                    bat "${env.PYTHON_CMD} --version"
                 }
             }
         }
@@ -33,9 +40,9 @@ pipeline {
                 bat """
                     @echo off
                     echo === Installation des dépendances ===
-                    python --version
-                    python -m pip install --upgrade pip
-                    python -m pip install selenium webdriver-manager
+                    ${env.PYTHON_CMD} --version
+                    ${env.PYTHON_CMD} -m pip install --upgrade pip
+                    ${env.PYTHON_CMD} -m pip install selenium webdriver-manager
                     echo ✅ Dépendances installées
                 """
             }
@@ -46,7 +53,7 @@ pipeline {
                 bat """
                     @echo off
                     echo === Exécution des tests ===
-                    python sauce_demo_tests.py
+                    ${env.PYTHON_CMD} sauce_demo_tests.py
                 """
             }
         }
