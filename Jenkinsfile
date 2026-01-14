@@ -8,21 +8,6 @@ pipeline {
             }
         }
         
-        stage('List Files') {
-            steps {
-                bat """
-                    @echo off
-                    echo === Structure du projet ===
-                    dir /S /B *.py
-                    echo.
-                    dir /B
-                    echo.
-                    cd selenium_tests
-                    dir /B
-                """
-            }
-        }
-        
         stage('Setup Python') {
             steps {
                 script {
@@ -63,12 +48,16 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                bat """
-                    @echo off
-                    echo === Exécution des tests ===
-                    cd selenium_tests
-                    ${env.PYTHON_CMD} ConnexionErrorHandling.py
-                """
+                script {
+                    // Essayer de régler l'encodage pour éviter l'erreur Unicode
+                    bat """
+                        @echo off
+                        echo === Exécution des tests ===
+                        cd selenium_tests
+                        set PYTHONIOENCODING=utf-8
+                        ${env.PYTHON_CMD} ConnexionErrorHandling.py
+                    """
+                }
             }
         }
     }
