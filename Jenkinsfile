@@ -1,47 +1,53 @@
 pipeline {
     agent any
     
+    parameters {
+        choice(
+            name: 'BROWSER',
+            choices: ['chrome', 'edge'],
+            description: 'Select browser to test'
+        )
+    }
+    
     stages {
-        stage('Vérifier Python') {
-            steps {
-                bat """
-                    echo "=== Vérification ==="
-                    where python
-                    python --version
-                    pip --version
-                """
-            }
-        }
-        
-        stage('Récupérer code') {
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
         
-        stage('Installer dépendances') {
+        stage('Verify Python') {
             steps {
-                bat """
-                    echo "Installation des packages..."
-                    pip install selenium
-                    echo "✅ Selenium installé"
-                """
+                script {
+                    echo '✅ Vérification de Python...'
+                    bat 'python --version'
+                    bat 'pip --version'
+                }
             }
         }
         
-        stage('Exécuter tests') {
+        stage('Install Dependencies') {
             steps {
-                bat """
-                    echo "Exécution des tests..."
-                    python sauce_demo_tests.py
-                """
+                script {
+                    echo '📦 Installation des dépendances...'
+                    bat 'pip install selenium webdriver-manager'
+                }
             }
         }
-    }
-    
-    post {
-        always {
-            echo 'Pipeline terminé'
+        
+        stage('Run Tests') {
+            steps {
+                script {
+                    echo '🧪 Exécution des tests...'
+                    bat 'python sauce_demo_tests.py'
+                }
+            }
+        }
+        
+        stage('Archive Results') {
+            steps {
+                archiveArtifacts artifacts: '*.png, *.txt, *.log', fingerprint: true
+            }
         }
     }
 }
