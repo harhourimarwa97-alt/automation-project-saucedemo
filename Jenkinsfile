@@ -1,34 +1,39 @@
 pipeline {
     agent any
     
-    tools {
-        // Configure Python in Jenkins Global Tool Configuration first
-        python('Python3')
-    }
-    
     stages {
-        // Étape 1: Récupération du code
-        stage('Checkout') {
+        stage('Vérifier Python') {
+            steps {
+                bat """
+                    echo "=== Vérification ==="
+                    where python
+                    python --version
+                    pip --version
+                """
+            }
+        }
+        
+        stage('Récupérer code') {
             steps {
                 checkout scm
             }
         }
         
-        // Étape 2: Installation des dépendances
-        stage('Install Dependencies') {
+        stage('Installer dépendances') {
             steps {
                 bat """
-                    python -m pip install --upgrade pip
-                    pip install selenium webdriver-manager pytest
+                    echo "Installation des packages..."
+                    pip install selenium
+                    echo "✅ Selenium installé"
                 """
             }
         }
         
-        // Étape 3: Exécution des tests
-        stage('Run Tests') {
+        stage('Exécuter tests') {
             steps {
                 bat """
-                    python -m pytest tests/ -v
+                    echo "Exécution des tests..."
+                    python sauce_demo_tests.py
                 """
             }
         }
@@ -37,12 +42,6 @@ pipeline {
     post {
         always {
             echo 'Pipeline terminé'
-        }
-        success {
-            echo '✅ Tous les tests ont réussi!'
-        }
-        failure {
-            echo '❌ Certains tests ont échoué!'
         }
     }
 }
