@@ -46,3 +46,11 @@ Temps de chargement: 0.70 secondes
 Temps de connexion: 0.18 secondes
 Score: 6/6
 Résultat: PASS
+
+========================================
+TEST DE PERFORMANCE - 2026-01-14 13:16:24
+========================================
+Temps de chargement: 0.82 secondes
+Temps de connexion: 0.38 secondes
+Score: 6/6
+Résultat: PASS
