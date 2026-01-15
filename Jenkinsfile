@@ -2,46 +2,77 @@ pipeline {
     agent any
     
     stages {
-        stage('Install Python') {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Setup Python') {
             steps {
                 script {
-                    echo '📥 Installation de Python...'
+                    echo '🐍 Configuration de Python...'
                     
-                    bat """
-                        echo "Vérification de l'installation de Python..."
-                        
-                        # Si Python n'est pas installé, le télécharger et l'installer
-                        python --version 2>nul
-                        if errorlevel 1 (
-                            echo "Python non détecté, tentative d'installation..."
-                            
-                            # Télécharger Python (version spécifique)
-                            curl -o python-installer.exe https://www.python.org/ftp/python/3.14.2/python-3.14.2-amd64.exe
-                            
-                            # Installer Python silencieusement
-                            python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
-                            
-                            # Attendre l'installation
-                            timeout /t 60
-                            
-                            # Vérifier l'installation
-                            python --version || echo "Redémarrez l'agent après installation"
-                        ) else (
-                            echo "✅ Python déjà installé"
-                        )
-                    """
+                    // Essayer différentes commandes Python
+                    def pythonCheck = bat(returnStatus: true, script: 'python --version 2>nul')
+                    def pyCheck = bat(returnStatus: true, script: 'py --version 2>nul')
+                    
+                    if (pythonCheck == 0) {
+                        echo '✅ Python (python) est disponible'
+                        env.PYTHON_CMD = 'python'
+                    } else if (pyCheck == 0) {
+                        echo '✅ Python (py) est disponible'
+                        env.PYTHON_CMD = 'py'
+                    } else {
+                        echo 'Python non trouvé. Installation manuelle requise.'
+                        error('Python non installé sur cet agent')
+                    }
+                    
+                    bat "${env.PYTHON_CMD} --version"
                 }
+            }
+        }
+        
+        stage('Install Dependencies') {
+            steps {
+                bat """
+                    @echo off
+                    echo === Installation des dépendances ===
+                    ${env.PYTHON_CMD} --version
+                    ${env.PYTHON_CMD} -m pip install --upgrade pip
+                    ${env.PYTHON_CMD} -m pip install selenium webdriver-manager
+                    echo ✅ Dépendances installées
+                """
             }
         }
         
         stage('Run Tests') {
             steps {
-                bat """
-                    python --version
-                    pip install selenium
-                    python sauce_demo_tests.py
-                """
+
+                script {
+                    // Essayer de régler l'encodage pour éviter l'erreur Unicode
+                    bat """
+                        @echo off
+                        echo === Exécution des tests ===
+                        cd selenium_tests
+                        set PYTHONIOENCODING=utf-8
+                        ${env.PYTHON_CMD} ConnexionErrorHandling.py
+                    """
+                }
             }
+        }
+    }
+    
+    post {
+        success {
+            echo '✅ Pipeline exécuté avec succès!'
+        }
+        failure {
+            echo '❌ Pipeline a échoué'
+        }
+        always {
+            echo 'Pipeline terminé'
         }
     }
 }
