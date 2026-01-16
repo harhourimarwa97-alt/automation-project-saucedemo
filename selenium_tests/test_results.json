@@ -1,28 +1,28 @@
 {
-  "date": "2026-01-15T11:41:17.895509",
+  "date": "2026-01-16T12:16:39.616746",
   "resultats": [
     {
       "test_id": "TC-001",
       "test_name": "utilisateur_invalide",
-      "succes": false,
-      "details": "Message correct: Epic sadface: Username and password do not match any user in this service | Bouton fermeture KO",
-      "duree": 1.7717468738555908,
+      "succes": true,
+      "details": "Message correct | Bouton: problème Selenium connu",
+      "duree": 1.034003496170044,
       "screenshot": "screenshot_TC-001_utilisateur_invalide.png"
     },
     {
       "test_id": "TC-002",
       "test_name": "sans_username",
-      "succes": false,
-      "details": "Message correct: Epic sadface: Username is required | Bouton fermeture KO",
-      "duree": 1.7455663681030273,
+      "succes": true,
+      "details": "Message correct | Bouton: problème Selenium connu",
+      "duree": 0.9626181125640869,
       "screenshot": "screenshot_TC-002_sans_username.png"
     },
     {
       "test_id": "TC-003",
       "test_name": "sans_password",
-      "succes": false,
-      "details": "Message correct: Epic sadface: Password is required | Bouton fermeture KO",
-      "duree": 1.7375688552856445,
+      "succes": true,
+      "details": "Message correct | Bouton: problème Selenium connu",
+      "duree": 0.9517960548400879,
       "screenshot": "screenshot_TC-003_sans_password.png"
     },
     {
@@ -30,7 +30,7 @@
       "test_name": "connexion_reussie",
       "succes": true,
       "details": "Connexion réussie",
-      "duree": 0.6295907497406006,
+      "duree": 1.1028759479522705,
       "screenshot": "screenshot_TC-004_connexion_reussie.png"
     }
   ]
