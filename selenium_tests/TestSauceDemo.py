@@ -1,10 +1,3 @@
-"""
-Script principal des tests SauceDemo
-Auteur: Automatisé
-Date: 2024-01-12
-Description: Exécute les tests de gestion des erreurs de connexion
-"""
-
 import json
 import time
 import os
@@ -40,26 +33,19 @@ def afficher_introduction(tests_data):
     print("🚀 TESTS SELENIUM - SAUCEDEMO")
     print("="*60)
     
-    if tests_data:
-        print(f"\n📋 Suite de tests: {tests_data.get('test_suite', 'Non spécifié')}")
-        print(f"📝 Description: {tests_data.get('description', '')}")
-        print(f"🌐 URL: {tests_data.get('url', 'Non spécifié')}")
-        print(f"🧪 Nombre de tests: {len(tests_data.get('test_cases', []))}")
+   
     
     print("\n🎯 Objectif: Tester les scénarios de connexion échouée")
     print("🔧 Points techniques: Gérer les messages d'erreur dynamiques, localiser les éléments d'erreur")
     
-    print("\n⚙️ Configuration système:")
+    
     chrome_portable = os.path.exists(r'C:\Chrome_Sources\chrome-win64\chrome.exe')
     chromedriver = os.path.exists(r'C:\Chrome_Sources\chromedriver-win64\chromedriver.exe')
     
-    print(f"   Chrome portable: {'✅' if chrome_portable else '❌'}")
-    print(f"   ChromeDriver: {'✅' if chromedriver else '❌'}")
     
     if not chromedriver:
         print("\n⚠️  IMPORTANT: ChromeDriver non trouvé!")
-        print("   Téléchargez-le sur: https://chromedriver.chromium.org/")
-        print("   Placez-le dans: C:\\Chrome_Sources\\")
+        
     
     print("\n⏳ Démarrage dans 5 secondes...")
     time.sleep(5)
@@ -99,13 +85,13 @@ def afficher_resultats(resultats, duree_totale):
     print(f"│ ⏱️  TEMPS TOTAL            : {duree_totale:6.1f}s     │")
     print(f"└{'─'*40}┘")
     
-    # Message final
-    print("\n" + "="*60)
-    print("📋 CONCLUSION")
-    print("="*60)
+   # Message final
+    #print("\n" + "="*60)
+    #print("📋 CONCLUSION")
+   
     
     if tests_reussis == total_tests:
-        print("\n🎉🎉🎉 FÉLICITATIONS ! TOUS LES TESTS SONT RÉUSSIS ! 🎉🎉🎉")
+        print("\n🎉 FÉLICITATIONS ! TOUS LES TESTS SONT RÉUSSIS ! 🎉")
     elif taux_reussite >= 80:
         print(f"\n👍 EXCELLENT ! {tests_reussis}/{total_tests} tests réussis")
     else:
@@ -196,10 +182,10 @@ def executer_tous_les_tests():
 # ==============================================
 
 if __name__ == "__main__":
-    print("\n🔧" * 25)
+   
     print("🔧 TESTS AUTOMATISÉS SAUCEDEMO")
     print("🔧 Gestion des erreurs de connexion")
-    print("🔧" * 25)
+    
     
     try:
         resultats = executer_tous_les_tests()
@@ -222,6 +208,6 @@ if __name__ == "__main__":
         traceback.print_exc()
     
     finally:
-        print("\n" + "="*60)
+       
         print("👋 Programme terminé")
         print("="*60)
